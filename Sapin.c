@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//all color for the end
 #define ANSI_COLOR_RED     "\x1b[31m"
 #define ANSI_COLOR_GREEN   "\x1b[32m"
 #define ANSI_COLOR_YELLOW  "\x1b[33m"
@@ -30,7 +31,7 @@ void my_putchar(char c)
   write(1,&c,1);
 }
 
-void my_putstr(char *str) //affiche des str
+void my_putstr(char *str)
 {
   int i = 0;
   while (str[i] != '\0')
@@ -40,7 +41,7 @@ void my_putstr(char *str) //affiche des str
     }
 }
 
-int starmax(int size)
+int starmax(int size) //calcul of maximal number of star
 {
     int i = 0;
     int j = 0;
@@ -52,17 +53,16 @@ int starmax(int size)
     int temp = count;
     int star_moins = 1;
 
-    while (i < size) // le nombre de bloc de feuille est == a la size
+    while (i < size) // number of block in the tree == size
     {
-        while (k < bloc) //nb de ligne dans un bloc
+        while (k < bloc) //line in a block
         {
-            while (j < star) //affichage du feuillage
+            while (j < star) //number of star
             {
                 count++;
                 j++;
             }
-            // espace = espace--; //permet de réduire l'espace vide avant le début de chaque ligne
-            star = star +2;//ajoute une étoile de chq coté a chq ligne
+            star = star +2;//add a star each new line and each side
             j = 0;
             k++;
             temp = count;
@@ -71,16 +71,15 @@ int starmax(int size)
         k = 0;
         bloc++;
 
-        if (i % 2 == 0) //tout les 2 plateau
+        if (i % 2 == 0) //all the 2 block, we loose star each side
         {
             star_moins++;
         }
 
-        star = star - 2 *star_moins; //les nombre d'étoile perdu augmente de 2 tout les 2 plateaux
+        star = star - 2 *star_moins; //the number of stars loose increase by 2 every 2 block
         i++;
 
     }
-//    printf("temp = %d\n",temp);
     return temp;
 }
 
@@ -98,24 +97,21 @@ void sapin(int size)
     int comp = 0;
 
 
-    //calcul de l'espace max à la cime du Sapin
+    //calcul of the center of christmas tree
     espace = starmax(size)/2 - decr;
     //printf("espace = %d\n", espace);
 
-    //construction des branches
-    while (i < size)//crée les bloc 1 après l'autre
+    while (i < size)
     {
-        while (k < bloc) //on parcourt l'intérieur du bloc
+        while (k < bloc)
         {
-            // printf("l = %d\n", l);
-            // printf("espace = %d\n", espace);
-            while (l < (espace))//on affiche l'espace qui permet de centrer le sapin
+            while (l < (espace)) //print space (for have a tree)
             {
                 my_putchar(' ');
                 l++;
             }
 
-            while (j < star) //affichage du feuillage
+            while (j < star) 
             {
                 if ((j > 0) && (j % 2 == 1) && (k % 2 == 1))
                 {
@@ -136,16 +132,14 @@ void sapin(int size)
                 else
                 {
                     my_putstr(ANSI_FOND_GREEN);
-                    // my_putstr(ANSI_COLOR_GREEN);
                     my_putchar('*');
-                    // my_putstr(ANSI_FOND_RESET);
                     my_putstr(ANSI_COLOR_RESET);
                 }
                 j++;
             }
             my_putchar('\n');
-            espace--; //permet de réduire l'espace vide avant le début de chaque ligne
-            star = star +2;//ajoute une étoile de chq coté a chq ligne
+            espace--; //reduce space at the start of each line
+            star = star +2;//add a star each newline and each side
             j = 0;
             l = 0;
             k++;
@@ -153,13 +147,13 @@ void sapin(int size)
         k = 0;
         bloc++;
 
-        if (i % 2 == 0) //tout les 2 plateau
+        if (i % 2 == 0)
         {
             star_moins++;
         }
 
-        star = star - 2 *star_moins; //les nombre d'étoile perdu augmente de 2 tout les 2 plateaux
-        espace = espace + star_moins; //on augmente l'espace pour compenser la perte des étoiles
+        star = star - 2 *star_moins; 
+        espace = espace + star_moins;
 
         i++;
     }
@@ -187,18 +181,18 @@ void tronc(int size)
 
         while (i < size)
         {
-            if (size % 2 == 0) //permet de gérer les cas pair ou la hauteurs du tronc != a sa largeur
+            if (size % 2 == 0) 
                 newSize = size +1;
             else
                 newSize = size;
 
-            while (l < espace) //centre le tronc
+            while (l < espace)
             {
                 my_putchar(' ');
                 l++;
             }
 
-            while (j < newSize) //affiche le tronc
+            while (j < newSize) 
             {
                 my_putstr(ANSI_FOND_RED);
                 my_putstr(ANSI_COLOR_YELLOW);
